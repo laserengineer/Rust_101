@@ -6,8 +6,6 @@
 //
 // Notes:
 
-use std::fmt;
-
 // * Use an enum for the box color
 #[allow(dead_code)]
 enum Color {
@@ -16,30 +14,28 @@ enum Color {
     Green,
 }
 
+impl Color {
+    fn print(&self) {
+        match self {
+            Color::Red => println!("red"),
+            Color::Blue => println!("blue"),
+            Color::Green => println!("green"),
+        }
+    }
+}
+
 struct Dimensions {
     length: f64,
     width: f64,
     height: f64,
 }
 
-impl fmt::Display for Dimensions {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(
-            f,
+impl Dimensions {
+    fn print(&self) {
+        println!(
             "Length: {:.2}, Width: {:.2}, Height: {:.2}",
             self.length, self.width, self.height
-        )
-    }
-}
-
-impl Color {
-    //Convert the color to a string representation
-    fn to_string(&self) -> &'static str {
-        match self {
-            Color::Red => "Red",
-            Color::Blue => "Blue",
-            Color::Green => "Green",
-        }
+        );
     }
 }
 
@@ -52,26 +48,29 @@ struct Box {
 
 impl Box {
     // * Implement functionality on the box struct to create a new box
-    fn new() -> Self {
+    fn new(dimensions: Dimensions, weight: f64, color: Color) -> Self {
         Self {
-            dimensions: Dimensions {
-                length: 5.0,
-                width: 10.0,
-                height: 15.0,
-            },
-            weight: 5.0,
-            color: Color::Blue,
+            dimensions,
+            weight,
+            color,
         }
     }
+
     // * Implement functionality on the box struct to print the characteristics
     fn print_characteristics(&self) {
-        println!("Dimensions: {}", self.dimensions);
+        self.color.print();
         println!("Weight: {}", self.weight);
-        println!("Color: {}", self.color.to_string());
+        self.dimensions.print();
     }
 }
 
 fn main() {
-    let box1 = Box::new();
+    let dimensions = Dimensions {
+        length: 1.3,
+        width: 2.5,
+        height: 3.6,
+    };
+
+    let box1 = Box::new(dimensions, 54.7, Color::Red);
     box1.print_characteristics();
 }
