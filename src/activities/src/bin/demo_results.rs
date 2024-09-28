@@ -27,6 +27,6 @@ fn pick_choice(input: &str) -> Result<(), String> {
 }
 
 fn main() {
-    let choice = pick_choice("Quit");
+    let choice = pick_choice("Quit1");
     println!("choice value = {:?}", choice);
 }
